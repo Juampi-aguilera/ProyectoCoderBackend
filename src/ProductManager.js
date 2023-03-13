@@ -1,4 +1,4 @@
-const fs = require('fs')
+import fs from 'fs'
 
 class ProductManager {
     constructor(path) {
@@ -8,7 +8,7 @@ class ProductManager {
 
     read = async() =>{
         let result = await fs.promises.readFile(this.path,"utf-8")
-        let parsedRes = await JSON.parse(result)
+        let parsedRes = JSON.parse(result)
         return parsedRes
     }
     
@@ -43,16 +43,18 @@ class ProductManager {
     }
 
     getProducts = async() => {
-        console.log(await this.read())
-        return await this.read()
+        let res = await this.read()
+        console.log(res)
+        return res
     }
 
-    getProductById = async(id) => {
+    getProductById = async(code) => {
         let res = await this.read()
-        if (res.find(item => item.id == id) === undefined) {
+        if (res.find(item => item.code == code) === undefined) {
             console.error("Error: Product not found")
+            return "Error: Product not found"
         } else {
-            let productById = res.find(item => item.id == id)
+            let productById = res.find(item => item.code == code)
             console.log(productById)
             return productById
         }
@@ -67,16 +69,17 @@ class ProductManager {
             await fs.promises.writeFile(this.path, JSON.stringify(newArr))
             console.log(newArr)
         } else {
-            console.log(`Product ID ${id} does not exist`)
+            console.error(`Product ID ${id} does not exist`)
         }
     }
 
-    deleteProduct = async(id) => {
+    deleteProduct = async(code) => {
         let res = await this.read()
-        if (res.find(item => item.id == id) === undefined) {
+        if (res.find(item => item.code == code) === undefined) {
             console.error("Error: Product not found")
+            return "Error: Product not found"
         } else {
-            let productById = res.find(item => item.id == id)
+            let productById = res.find(item => item.code == code)
             let indice = res.indexOf(productById)
             res.splice(indice,1)
             await fs.promises.writeFile(this.path, JSON.stringify(res))
@@ -86,12 +89,4 @@ class ProductManager {
     }
 }
 
-// pruebas
-let manager = new ProductManager("products")
-manager.addProduct("manzana","asda",30,"",01,23)
-manager.addProduct("manzana2","asda2",302,"2",02,232)
-manager.getProducts();
-manager.getProductById(1);
-manager.getProductById(3)
-manager.updateProduct(1,{title: "Banana"})
-manager.deleteProduct(2)
+export default ProductManager;

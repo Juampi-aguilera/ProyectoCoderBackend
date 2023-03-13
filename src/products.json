@@ -1,0 +1,29 @@
+[
+    {
+        "title": "Kill Bill",
+        "description": "Cuadro de Kill Bill",
+        "price": 6000,
+        "thumbnail": "https://postercity.com.ar/wp-content/uploads/2019/09/kill-bill-510x765.jpg",
+        "code": 1,
+        "stock": 23,
+        "id": 1
+    },
+    {
+        "title": "Pulp Fiction",
+        "description": "Cuadro de Pulp Fiction",
+        "price": 5000,
+        "thumbnail": "https://postercity.com.ar/wp-content/uploads/2017/07/Pulpfiction-510x744.jpg",
+        "code": 2,
+        "stock": 15,
+        "id": 2
+    },
+    {
+        "title": "john lennon pop",
+        "description": "Cuadro de john lennon pop",
+        "price": 4000,
+        "thumbnail": "https://postercity.com.ar/wp-content/uploads/2022/07/john-lennon-pop-510x680.jpg",
+        "code": 3,
+        "stock": 23,
+        "id": 3
+    }
+]

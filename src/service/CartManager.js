@@ -23,6 +23,7 @@ class CartManager {
             cart.cartId = ultimoId + 1
         } else {
             cart.cartId = 1
+            console.log(this.carts.length)
         }
         this.carts.push(cart)
 
@@ -31,18 +32,38 @@ class CartManager {
 
     getCartById = async(cartId) => {
         let res = await this.read()
-        if (res.find(item => item.cartId == cartId) === undefined) {
+        let cartById = res.find(item => item.cartId == cartId)
+        if (cartById === undefined) {
             console.error("Error: Cart not found")
             return "Error: Cart not found"
         } else {
-            let cartById = res.find(item => item.cartId == cartId)
             console.log(cartById)
             return cartById
         }
     }
 
-    addProduct= async(id)=>{
-        
+    addProductCart= async(cid,pid)=>{
+        let res = await this.read()
+        if (await this.getCartById(cid)) {
+            let newArr = res.map((item) => {
+                if(cid == item.cartId){
+                    let inCart = item.products.find(product => product.id == pid)
+                        if(inCart == undefined){
+                            item.cartId=cid
+                            item.products=[...item.products,{productId: pid, quantity:1}]
+                        }else{
+                            item.cartId=cid
+                            item.products=[...item.products,{productId: pid, quantity:item.products.quantity++}]
+                        }
+                }else{
+                    item
+                }
+            })
+            await fs.promises.writeFile(this.path, JSON.stringify(newArr))
+            console.log(newArr)
+        } else {
+            console.error(`Product ID ${id} does not exist`)
+        }
     }
     
 }

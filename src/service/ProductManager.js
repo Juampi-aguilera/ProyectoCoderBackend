@@ -20,10 +20,11 @@ class ProductManager {
             price: price,
             thumbnail: thumbnail,
             code: code,
+            status:true,
             stock: stock
         }
 
-        if (product.stock === undefined || product.price === undefined || product.title === undefined || product.description === undefined || product.thumbnail === undefined || product.code === undefined) {
+        if (product.stock === undefined || product.price === undefined || product.title === undefined || product.description === undefined || product.code === undefined) {
             console.error("Error: Revise e ingrese los campos nuevamente")
         }else{
             if (this.products.find(item => item.code === product.code) === undefined) {
@@ -60,11 +61,11 @@ class ProductManager {
         }
     }
 
-    updateProduct = async(id, campo) => {
+    updateProduct = async(id, product) => {
         let res = await this.read()
         if (await this.getProductById(id)) {
             let newArr = res.map((item) => {
-                return (id == item.id ? { ...item, ...campo } : item)
+                return (id == item.id ? { ...item, ...product } : item)
             })
             await fs.promises.writeFile(this.path, JSON.stringify(newArr))
             console.log(newArr)

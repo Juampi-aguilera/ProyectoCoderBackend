@@ -13,7 +13,8 @@ class ProductManager {
     }
     
     addProduct = async (title, description, price, thumbnail, code, stock) => {
-        // await fs.promises.mkdir(this.path, { recursive: true })
+        this.products= await this.read()
+
         let product = {
             title: title,
             description: description,

@@ -1,0 +1,14 @@
+<h1>edicion de formulario</h1>
+
+<div>
+    <ol>
+        {{#each products}}
+            <li>{{this.title}}</li>
+        {{/each}}
+    </ol>
+</div>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>

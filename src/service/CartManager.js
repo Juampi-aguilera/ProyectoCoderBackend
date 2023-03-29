@@ -14,20 +14,18 @@ class CartManager {
 
 
     addCart = async () => {
+        let carts= await this.read()
+
         let cart = {
+            cartId: carts.length > 0 ? carts[carts.length - 1].cartId + 1 : 1,
             products: []
         }
 
-        if (this.carts.length > 0) {
-            let ultimoId = this.carts[this.carts.length - 1].cartId
-            cart.cartId = ultimoId + 1
-        } else {
-            cart.cartId = 1
-            console.log(this.carts.length)
-        }
-        this.carts.push(cart)
+        carts.push(cart)
 
-        await fs.promises.writeFile(this.path, JSON.stringify(this.carts))
+        await fs.promises.writeFile(this.path, JSON.stringify(carts))
+
+        this.carts=carts
     }
 
     getCartById = async(cartId) => {

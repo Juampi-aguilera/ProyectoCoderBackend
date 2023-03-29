@@ -6,13 +6,17 @@ let manager = new ProductManager("./files/products.json")
 
 router.get("/",async(req,res)=>{
     let {limit} = req.query
-    let arr = await manager.getProducts()
+    let products = await manager.getProducts()
     if(limit){
-        let filteredArr = arr.splice(0,limit)
+        let filteredArr = products.splice(0,limit)
         res.send(filteredArr)
     }else{
-        res.send(arr)
-    }    
+        res.render('home',{
+            title:"home",
+            products
+        })
+        // res.send(products)
+    }  
 })
 
 router.get("/:pid",async(req,res)=>{
@@ -20,11 +24,11 @@ router.get("/:pid",async(req,res)=>{
 })
 
 router.post("/",async(req,res)=>{
-    let product = req.body 
-    await manager.addProduct(product)
+    let {title,description,price,thumbnail,code,status,stock} = req.body 
+    await manager.addProduct(title,description,price,thumbnail,code,status,stock)
     res.status(200).send({
         status: "Success",
-        message: `Product ${product.code} was generated successfully!`
+        message: `Product ${code} was generated successfully!`
     });
 })
 

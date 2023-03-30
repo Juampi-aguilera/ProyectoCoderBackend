@@ -2,11 +2,12 @@ import express from 'express'
 import productsRouter from "./routes/products.routes.js"
 import cartsRouter from "./routes/carts.routes.js"
 import realtimeproductsRouter from "./routes/realtimeproducts.routes.js"
+import ProductManager from './service/ProductManager.js'
 import __dirname from "./utils.js";
 import handlebars from "express-handlebars"
 import { Server } from "socket.io";
 
-
+let manager = new ProductManager("./files/products.json")
 const app = express()
 const PORT = 8080
 
@@ -36,5 +37,14 @@ socketServer.on("connection", socket=>{
     console.log("Cliente conectado!");
 
     // escuchamos al cliente
-    
+    socket.on("product", data =>{
+        let {title,description,price,thumbnail,code,stock} = data
+        manager.addProduct(title,description,price,thumbnail,code,stock)
+        
+    })
+
+    socket.on("deleteProduct", data => {
+        console.log(data)
+        manager.deleteProduct(data)
+    })
 })

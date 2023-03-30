@@ -3,11 +3,47 @@
 <div>
     <ol>
         {{#each products}}
-            <li>{{this.title}}</li>
+        <li>{{this.title}}</li>
         {{/each}}
     </ol>
 </div>
 
+<div>
+    <h2>Agregar Productos</h2>
+    <form id="addForm" >
+        <label for="addTitle">Nombre</label>
+        <input type="text" id="addTitle" />
+
+        <label for="addDescription">Descripcion</label>
+        <input type="text" id="addDescription" />
+
+        <label for="addThumbnail">Thumbnail</label>
+        <input type="text" id="addThumbnail" />
+
+        <label for="addPrice">Precio</label>
+        <input type="number" id="addPrice" />
+
+        <label for="addCode">Codigo</label>
+        <input type="text" id="addCode" />
+
+        <label for="addStock">Stock</label>
+        <input type="number" id="addStock" />
+
+        <button type="submit" id="addButton">Agregar</button>
+    </form>
+</div>
+
+<div>
+    <h2>Eliminar Productos</h2>
+
+    <form >
+        <label for="title">CODE del Producto</label>
+        <input type="number" id="delId" />
+
+        <button type="submit" id="delButton">Eliminar</button>
+    </form>
+</div>
+</div>
 
 
 <script src="/socket.io/socket.io.js"></script>

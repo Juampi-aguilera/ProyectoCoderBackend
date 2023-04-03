@@ -9,7 +9,7 @@ import { Server } from "socket.io";
 
 let manager = new ProductManager("./files/products.json")
 const app = express()
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 
 const httpServer = app.listen(PORT, ()=>{
     console.log('server running on port: '+PORT);

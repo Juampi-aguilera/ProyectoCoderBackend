@@ -42,25 +42,24 @@ class CartManager {
 
     addProductCart= async(cid,pid)=>{
         let res = await this.read()
-        if (await this.getCartById(cid)) {
-            let newArr = res.map((item) => {
-                if(cid == item.cartId){
-                    let inCart = item.products.find(product => product.id == pid)
-                        if(inCart == undefined){
-                            item.cartId=cid
-                            item.products=[...item.products,{productId: pid, quantity:1}]
-                        }else{
-                            item.cartId=cid
-                            item.products=[...item.products,{productId: pid, quantity:item.products.quantity++}]
-                        }
-                }else{
-                    item
-                }
-            })
+        let cidInt = parseInt(cid)
+        let cartExists = false
+        let newArr = res.map((item) => {
+            if(cidInt == item.cartId){
+                cartExists = true
+                let inCart = item.products.find(product => product.productId == pid)
+                    if(inCart == undefined){
+                        item.products.push({productId: pid, quantity:1})
+                    }else{
+                        inCart.quantity++
+                    }
+            }return item;
+        })
+        if (cartExists) {  
             await fs.promises.writeFile(this.path, JSON.stringify(newArr))
             console.log(newArr)
         } else {
-            console.error(`Product ID ${id} does not exist`)
+            console.error(`Product ID ${cidInt} does not exist`)
         }
     }
     

@@ -6,6 +6,8 @@ import ProductManager from './service/ProductManager.js'
 import __dirname from "./utils.js";
 import handlebars from "express-handlebars"
 import { Server } from "socket.io";
+import mongoose from 'mongoose'
+import productsModel from './models/products.model.js'
 
 let manager = new ProductManager("./files/products.json")
 const app = express()
@@ -17,6 +19,22 @@ const httpServer = app.listen(PORT, ()=>{
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+const connectMongoDB= async()=>{
+    try{
+        await mongoose.connect("mongodb+srv://admin:1234@cluster0.ttuc4ws.mongodb.net/products")
+        console.log("Conectado con exito a MongoDB usando Moongose.");
+        // let response=await productsModel.insertMany([{"title":"Kill Bill","description":"Cuadro de Kill Bill","category":"Cine y Series","price":6000,"thumbnail":["https://postercity.com.ar/wp-content/uploads/2019/09/kill-bill-510x765.jpg"],"code":1,"status":true,"stock":true},{"title":"Pulp Fiction","description":"Cuadro de Pulp Fiction","category":"Cine y Series","price":6000,"thumbnail":["https://postercity.com.ar/wp-content/uploads/2017/07/Pulpfiction-510x744.jpg"],"code":2,"status":true,"stock":true},{"title":"john lennon pop","description":"Cuadro de john lennon pop","category":"Musica","price":4000,"thumbnail":["https://postercity.com.ar/wp-content/uploads/2022/07/john-lennon-pop-510x680.jpg"],"code":3,"status":true,"stock":true}])
+        // console.log(response)
+        let products = productsModel.find()
+        console.log(products) 
+
+    }catch(error) {
+        console.error("No se pudo conectar a la BD usando Moongose: " + error);
+        process.exit();
+    }
+}
+connectMongoDB()
 
 // configuracion de hbs
 app.engine('handlebars', handlebars.engine())

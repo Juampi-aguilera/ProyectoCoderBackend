@@ -1,22 +1,31 @@
 import { Router } from "express";
 import ProductManager from "../service/ProductManager.js";
+import productsModel from "../models/products.model.js";
 
 const router = Router()
 let manager = new ProductManager("./files/products.json")
 
 router.get("/",async(req,res)=>{
-    let {limit} = req.query
-    let products = await manager.getProducts()
-    if(limit){
-        let filteredArr = products.splice(0,limit)
-        res.send(filteredArr)
-    }else{
-        res.render('home',{
-            title:"home",
-            products
-        })
-        // res.send(products)
-    }  
+    // let {limit} = req.query
+    // let products = await manager.getProducts()
+    // if(limit){
+    //     let filteredArr = products.splice(0,limit)
+    //     res.send(filteredArr)
+    // }else{
+    //     res.render('home',{
+    //         title:"home",
+    //         products
+    //     })
+    //     // res.send(products)
+    // }  
+    let page = parseInt(req.query.page);
+    if(!page) page=1;
+
+    let result = await productsModel.paginate({},{page,limit:2,lean:true})
+    result.prevLink = result.hasPrevPage?`http://localhost:8080/products?page=${result.prevPage}`:'';
+    result.nextLink = result.hasNextPage?`http://localhost:8080/products?page=${result.nextPage}`:'';
+    result.isValid= !(page<=0||page>result.totalPages)
+    res.render('home',result)
 })
 
 router.get("/:pid",async(req,res)=>{

@@ -2,7 +2,7 @@
 
 <div>
     <ol>
-        {{#each products}}
+        {{#each docs}}
         <li>{{this.title}}</li>
         {{/each}}
     </ol>
@@ -42,6 +42,17 @@
 
         <button type="submit" id="delButton">Eliminar</button>
     </form>
+</div>
+<div>
+    {{#if hasPrevPage}}
+        <a href={{this.prevLink}}> << Anterior</a>
+    {{/if}}
+    &nbsp;
+    {{this.page}}
+    &nbsp;
+    {{#if hasNextPage}}
+        <a href={{this.nextLink}}>Siguiente >></a>
+    {{/if}} 
 </div>
 </div>
 

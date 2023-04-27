@@ -20,4 +20,8 @@ router.post("/:cid/product/:pid", async(req,res)=>{
     res.send(await cartManager.addProductCart(req.params.cid,req.params.pid))
 })
 
+router.delete("/:cid",async(req,res)=>{
+    res.send(await cartManager.deleteAllProduts(req.params.cid))
+})
+
 export default router

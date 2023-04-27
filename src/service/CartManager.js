@@ -62,6 +62,24 @@ class CartManager {
             console.error(`Product ID ${cidInt} does not exist`)
         }
     }
+
+    deleteAllProduts = async (cid)=>{
+        let res = await this.read()
+        let cidInt = parseInt(cid)
+        let cartExists = false
+        let newArr = res.map((item) => {
+            if(cidInt == item.cartId){
+                cartExists = true
+                item.products=[]
+            }return item;
+        })
+        if (cartExists) {  
+            await fs.promises.writeFile(this.path, JSON.stringify(newArr))
+            console.log(newArr)
+        } else {
+            console.error(`Product ID ${cidInt} does not exist`)
+        }
+    }
     
 }
 

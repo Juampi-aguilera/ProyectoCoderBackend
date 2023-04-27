@@ -7,7 +7,7 @@ let manager = new ProductManager("./files/products.json")
 
 router.get("/",async(req,res)=>{
     // let {limit} = req.query
-    let products = await manager.getProducts()
+    // let products = await manager.getProducts()
     // if(limit){
     //     let filteredArr = products.splice(0,limit)
     //     res.send(filteredArr)
@@ -18,10 +18,14 @@ router.get("/",async(req,res)=>{
     //     })
     //     // res.send(products)
     // }  
-    let page = parseInt(req.query.page);
-    if(!page) page=1;
+    let { limit, page, sort, ...query } = req.query;
 
-    let result = await productsModel.paginate({},{page,limit:2,lean:true})
+        limit = limit || 2;
+        page = page || 1;
+
+
+
+    let result = await productsModel.paginate({},{page,limit:limit,sort:sort,query:query,lean:true})
     result.prevLink = result.hasPrevPage?`http://localhost:8080/api/products?page=${result.prevPage}`:'';
     result.nextLink = result.hasNextPage?`http://localhost:8080/api/products?page=${result.nextPage}`:'';
     result.isValid= !(page<=0||page>result.totalPages)

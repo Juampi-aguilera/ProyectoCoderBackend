@@ -1,10 +1,19 @@
 <div>
     <h1>Nuestros productos</h1>
-    <ul>
+
+    <div>
         {{#each docs}}
-        <li>{{this.title}}</li>
+            <div>
+                <img width="200px" src="{{this.thumbnail.[0]}}" alt="{{this.description}}">
+                <span>
+                    <h3>{{this.title}}</h3>
+                    <p>${{this.price}}</p>
+                    <button onclick="{{}}">Add to cart</button>
+                </span>
+            </div>
         {{/each}}
-    </ul>
+    </div>
+
     <div>
         {{#if hasPrevPage}}
             <a href={{this.prevLink}}> << Anterior</a>

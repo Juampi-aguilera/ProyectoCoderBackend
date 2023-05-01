@@ -1,0 +1,14 @@
+<h1>My cart</h1>
+
+    <div>
+        {{#each docs}}
+            <div>
+                <img width="200px" src="{{this.thumbnail.[0]}}" alt="{{this.description}}">
+                <span>
+                    <h3>{{this.title}}</h3>
+                    <p>${{this.price}}</p>
+                    <button onclick="">remove</button>
+                </span>
+            </div>
+        {{/each}}
+    </div>

@@ -1,11 +1,12 @@
 <h1>My cart</h1>
 
     <div>
-        {{#each docs}}
+        {{#each products}}
             <div>
                 <img width="200px" src="{{this.thumbnail.[0]}}" alt="{{this.description}}">
                 <span>
                     <h3>{{this.title}}</h3>
+                    <p>{{this.quantity}}</p>
                     <p>${{this.price}}</p>
                     <button onclick="">remove</button>
                 </span>

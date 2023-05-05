@@ -1,29 +1,36 @@
 <div>
+    {{#unless user }}
+        <h1>You need to log in</h1>
+        <a href="/users/login"><button>log in</button></a>
+    
+    {{else}}
+    <a href="/users/logout"><button>log out</button></a>
     <h1>Nuestros productos</h1>
     <h2>Bienvenido {{user.name}}!</h2>
 
     <div>
-        {{#each docs}}
+        {{#each result.docs}}
             <div>
                 <img width="200px" src="{{this.thumbnail.[0]}}" alt="{{this.description}}">
                 <span>
                     <h3>{{this.title}}</h3>
                     <p>${{this.price}}</p>
-                    <button onclick="{{}}">Add to cart</button>
+                    <button onclick="">Add to cart</button>
                 </span>
             </div>
         {{/each}}
     </div>
 
     <div>
-        {{#if hasPrevPage}}
-            <a href={{this.prevLink}}> << Anterior</a>
+        {{#if result.hasPrevPage}}
+            <a href={{result.prevLink}}> << Anterior</a>
         {{/if}}
         &nbsp;
-        {{this.page}}
+        {{result.page}}
         &nbsp;
-        {{#if hasNextPage}}
-            <a href={{this.nextLink}}>Siguiente >></a>
+        {{#if result.hasNextPage}}
+            <a href={{result.nextLink}}>Siguiente >></a>
         {{/if}} 
     </div>
 </div>
+{{/unless }}

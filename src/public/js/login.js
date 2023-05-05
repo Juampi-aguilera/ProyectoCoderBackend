@@ -15,7 +15,10 @@ form.addEventListener('submit',e=>{
     }).then(result=>{
         if(result.status===200){
             console.log(obj)
-            window.location.replace('/users');
+            console.log(result)
+            result.role = "user" ? window.location.replace('/api/products') : window.location.replace('/api/realtimeproducts');
+        }else{
+            alert("Mail o contraseña incorrectos")
         }
     })
 })

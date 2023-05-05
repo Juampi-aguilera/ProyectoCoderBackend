@@ -4,7 +4,7 @@ import userModel from '../models/user.model.js';
 const router = Router();
 
 router.post("/register", async (req, res)=>{
-    const { first_name, last_name, email, age, password} = req.body;
+    const { first_name, last_name, email, age, password,role} = req.body;
     console.log("Registrando usuario:");
     console.log(req.body);
 
@@ -17,7 +17,8 @@ router.post("/register", async (req, res)=>{
         last_name,
         email,
         age,
-        password //se encriptara despues...
+        password, //se encriptara despues...
+        role
     };
     const result = await userModel.create(user);
     res.status(201).send({status: "success", message: "Usuario creado con extito con ID: " + result.id});

@@ -12,6 +12,9 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import usersRouter from "./routes/users.routes.js"
 import sessionsRouter from './routes/sessions.routes.js'
+import passport from 'passport';
+import initializePassport from './config/passport.config.js';
+// import githubLoginViewRouter from './routes/githubLogin.views.routes.js'
 
 let manager = new ProductManager("./files/products.json")
 const app = express()
@@ -53,6 +56,7 @@ app.use(session({
     saveUninitialized: true
 }))
 
+
 // configuracion de hbs
 app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname+'/views')
@@ -61,11 +65,18 @@ app.set('view engine', 'handlebars')
 // carpeta public
 app.use(express.static( __dirname + "/public"))
 
+//Middlewares Passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/users',usersRouter);
 app.use('/api/sessions',sessionsRouter);
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/api/realtimeproducts", realtimeproductsRouter)
+// app.use("/github", githubLoginViewRouter);
 
 const socketServer = new Server(httpServer)
 

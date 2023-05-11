@@ -14,7 +14,7 @@ router.get('/logout', (req, res)=>{
         if(error){
             res.json({error: "Error de logout", msg: 'Error al cerrar session'})
         }
-        res.send("Sesion cerrada correctamente!!")
+        res.send("Sesion cerrada correctamente!!")     
     })
 })
 

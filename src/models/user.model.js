@@ -12,6 +12,10 @@ const schema = mongoose.Schema({
     role:{
         type:String,
         default:"user"
+    },
+    loggedBy:{
+        type:String,
+        default:"Web"
     }
 })
 const userModel = mongoose.model("users",schema);
